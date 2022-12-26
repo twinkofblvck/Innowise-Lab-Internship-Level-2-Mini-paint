@@ -1,5 +1,5 @@
 import { Button, Flex, useColorMode, useMediaQuery } from "@chakra-ui/react";
-import { FC, useCallback } from "react";
+import { FC, memo, useCallback } from "react";
 import { BsMoonStars, BsSun } from "react-icons/bs";
 import useTypeDispatch from "../../hooks/redux/useTypeDispatch";
 import useTypeSelector from "../../hooks/redux/useTypeSelector";
@@ -13,7 +13,7 @@ const nextIcons =
   dark: <BsSun />
 };
 
-const NavBar: FC = () =>
+const NavBar: FC = memo(() =>
 {
   const { userData } = useTypeSelector(authSelector);
 
@@ -39,6 +39,6 @@ const NavBar: FC = () =>
       </Flex>
     </Flex>
   );
-};
+});
 
 export default NavBar;

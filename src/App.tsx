@@ -12,11 +12,12 @@ import useTypeDispatch from "./hooks/redux/useTypeDispatch";
 import { Unsubscribe } from "firebase/auth";
 import { Progress } from "@chakra-ui/react";
 import NavBar from "./components/generic/NavBar";
+import genericSelector from "./store/selectors/generic";
 
 const App = () =>
 {
   const { userData, isLoading: isSessionLoading } = useTypeSelector(authSelector);
-  const { isLoading } = useTypeSelector(state => state.generic);
+  const { isLoading } = useTypeSelector(genericSelector);
 
   const { setUserData } = authSlice.actions;
   const d = useTypeDispatch();

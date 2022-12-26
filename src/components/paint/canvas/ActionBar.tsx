@@ -23,7 +23,6 @@ const ActionBar: FC<IActionBarProps> = memo(({ transform, history }) =>
   ), []);
 
   return (
-
     <Flex gap={2} mb={2} zIndex={1} {...(shouldAdapt && adaptiveProps)}>
       {history}
       {transform}
