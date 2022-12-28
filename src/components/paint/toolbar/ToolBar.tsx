@@ -3,6 +3,7 @@ import { FC, memo, ReactElement } from "react";
 
 interface IToolBarProps
 {
+  isHidden: boolean;
   import_: ReactElement;
   export_: ReactElement;
   color: ReactElement;
@@ -11,10 +12,11 @@ interface IToolBarProps
   layers: ReactElement;
 }
 
-const ToolBar: FC<IToolBarProps> = memo(({ import_, export_, color, layers, size, tools }) =>
+const ToolBar: FC<IToolBarProps> = memo(({ isHidden, import_, export_, color, layers, size, tools }) =>
 {
   return (
     <Flex
+      pos="relative"
       direction="column"
       gap={10}
       px={5}
@@ -23,6 +25,7 @@ const ToolBar: FC<IToolBarProps> = memo(({ import_, export_, color, layers, size
       h="full"
       overflowY="auto"
       zIndex={1}
+      {...(isHidden && {display: "none"})}
     >
       {import_}
       {export_}

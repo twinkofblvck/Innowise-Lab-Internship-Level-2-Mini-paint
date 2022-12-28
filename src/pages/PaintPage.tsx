@@ -13,6 +13,7 @@ import ExportDialog from "../components/paint/toolbar/ExportDialog";
 import History from "../paint/control/History";
 import ToolBar from "../components/paint/toolbar/ToolBar";
 import Layer from "../paint/control/Layer";
+import ToolBarToggleBtn from "../components/paint/ToolBarToggleBtn";
 
 const PaintPage = memo(() =>
 {
@@ -28,6 +29,7 @@ const PaintPage = memo(() =>
   const [tool, setTool] = useState<PaintTool>(Tools[0].variant);
   const [color, setColor] = useState("#000");
   const [size, setSize] = useState(1);
+  const [isToolBarHidden, setIsToolBarHidden] = useState(false);
 
   const onSizeChange = useCallback((value: number | string) => setSize(+value), []);
   const onToolChange = useCallback((tool: PaintTool) => setTool(tool), []);
@@ -41,9 +43,9 @@ const PaintPage = memo(() =>
     tool?.SetCtx(currLayer?.ctx);
   }, [tool, currLayer]);
 
-  useEffect(() => 
+  useEffect(() =>
   {
-    !currLayer && setCurrLayerId(layers[layers.length - 1].id); 
+    !currLayer && setCurrLayerId(layers[layers.length - 1].id);
   }, [currLayer]);
 
   usePaint(canvas, visibleLayers);
@@ -52,6 +54,7 @@ const PaintPage = memo(() =>
     <Flex align="center" h="calc(100vh - 48px)" w="full" overflow="hidden">
       <DrawCanvas tool={tool} color={color} size={size} ref={canvas} layer={currLayer} stack={stack} />
       <ToolBar
+        isHidden={isToolBarHidden}
         import_={<ImportInput targetLayer={currLayer} stack={stack} />}
         export_={<ExportDialog canvasRef={canvas} />}
         color={<ColorPicker color={color} setColor={setColor} />}
@@ -59,6 +62,7 @@ const PaintPage = memo(() =>
         tools={<ToolsList currTool={tool} tools={Tools} onToolChange={onToolChange} />}
         layers={<LayersList currLayer={currLayer} layers={layers} setCurrLayerId={setCurrLayerId} setLayers={setLayers} />}
       />
+      <ToolBarToggleBtn isToolBarHidden={isToolBarHidden} setIsToolBarHidden={setIsToolBarHidden} />
     </Flex>
   );
 });
