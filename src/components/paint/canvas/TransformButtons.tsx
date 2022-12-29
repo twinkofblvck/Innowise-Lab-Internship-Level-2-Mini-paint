@@ -1,41 +1,51 @@
-import { Button } from "@chakra-ui/react";
 import { FC, memo, useMemo } from "react";
 import { BsZoomIn, BsZoomOut } from "react-icons/bs";
 import { AiOutlineRotateLeft, AiOutlineRotateRight } from "react-icons/ai";
 import { CgEditFlipH, CgEditFlipV } from "react-icons/cg";
 import useTransform from "../../../hooks/canvas/useTransform";
+import KeyboardAccess from "../../../keyboard/KeyboardAccess";
+import ActionBtn from "./ActionBtn";
 
 interface ITransformButtonsProps
 {
+  keyboard: KeyboardAccess | undefined;
   actions: ReturnType<typeof useTransform>[1];
   xFlipped: boolean;
   yFlipped: boolean;
 }
 
-const TransformButtons: FC<ITransformButtonsProps> = memo(({ actions, xFlipped, yFlipped }) =>
+const TransformButtons: FC<ITransformButtonsProps> = memo(({ keyboard, actions, xFlipped, yFlipped }) =>
 {
   const { flipX, flipY, rotateLeft, rotateRight, zoomIn, zoomOut } = useMemo(() => actions, [actions]);
 
   return (
     <>
-      <Button outline={xFlipped ? "solid orange 2px" : "unset"} onClick={flipX}>
+      <ActionBtn
+        outline={xFlipped ? "solid orange 2px" : "unset"}
+        action={flipX}
+        hotkey={keyboard?.CharFor(flipX)}
+      >
         <CgEditFlipH />
-      </Button>
-      <Button outline={yFlipped ? "solid orange 2px" : "unset"} onClick={flipY}>
+      </ActionBtn>
+      <ActionBtn
+        outline={yFlipped ? "solid orange 2px" : "unset"}
+        action={flipY}
+        hotkey={keyboard?.CharFor(flipY)}
+      >
         <CgEditFlipV />
-      </Button>
-      <Button onClick={rotateLeft}>
+      </ActionBtn>
+      <ActionBtn action={rotateLeft} hotkey={keyboard?.CharFor(rotateLeft)}>
         <AiOutlineRotateLeft />
-      </Button>
-      <Button onClick={rotateRight}>
+      </ActionBtn>
+      <ActionBtn action={rotateRight} hotkey={keyboard?.CharFor(rotateRight)}>
         <AiOutlineRotateRight />
-      </Button>
-      <Button onClick={zoomIn}>
+      </ActionBtn>
+      <ActionBtn action={zoomIn} hotkey={keyboard?.CharFor(zoomIn)}>
         <BsZoomIn />
-      </Button>
-      <Button onClick={zoomOut}>
+      </ActionBtn>
+      <ActionBtn action={zoomOut} hotkey={keyboard?.CharFor(zoomOut)}>
         <BsZoomOut />
-      </Button>
+      </ActionBtn>
     </>
   );
 });

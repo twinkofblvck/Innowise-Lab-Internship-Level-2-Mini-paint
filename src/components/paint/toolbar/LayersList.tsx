@@ -1,6 +1,6 @@
 import { Flex, Heading } from "@chakra-ui/react";
 import { ChangeEvent, Dispatch, FC, memo, MouseEvent, SetStateAction, useCallback } from "react";
-import Layer from "../../../paint/control/Layer";
+import { Layer, ILayer } from "../../../paint/control/Layer";
 import LayerItem from "./LayerItem";
 import LayerEffectsSelect from "./LayerEffectsSelect";
 import { LayerEffects } from "../../../types/paint";
@@ -8,9 +8,9 @@ import LayerActions from "./LayerActions";
 
 interface ILayersListProps
 {
-  layers: Layer[];
-  currLayer: Layer | undefined;
-  setLayers: Dispatch<SetStateAction<Layer[]>>;
+  layers: ILayer[];
+  currLayer: ILayer | undefined;
+  setLayers: Dispatch<SetStateAction<ILayer[]>>;
   setCurrLayerId: Dispatch<SetStateAction<number | undefined>>;
 }
 
@@ -21,7 +21,7 @@ const LayersList: FC<ILayersListProps> = memo(({ layers, currLayer, setLayers, s
     e.stopPropagation();
     setLayers(layers => layers.map((layer, i) =>
     {
-      if (i === index) layer.ToggleVisibility();
+      if (i === index) layer.isVisible = !layer.isVisible;
       return layer;
     }));
   }, [setLayers]);
@@ -44,13 +44,13 @@ const LayersList: FC<ILayersListProps> = memo(({ layers, currLayer, setLayers, s
     }));
   }, [currLayer, setLayers]);
 
-  const moveCurrentLayer = useCallback((direction: (arr: Layer[], i: number) => Layer[]) =>
+  const moveCurrentLayer = useCallback((direction: (arr: ILayer[], i: number) => ILayer[]) =>
     currLayer && setLayers(layers => direction([...layers], layers.indexOf(currLayer))), [currLayer, setLayers]);
 
   const removeCurrentLayer = useCallback(() =>
     setLayers(layers => layers.filter(layer => layer !== currLayer)), [currLayer, setLayers]);
 
-  const addLayer = useCallback(() => setLayers(layers => layers.concat(new Layer(800, 600))), [setLayers]);
+  const addLayer = useCallback(() => setLayers(layers => layers.concat(Layer.Create())), [setLayers]);
 
   return (
     <Flex direction="column" gap={3}>
@@ -59,7 +59,7 @@ const LayersList: FC<ILayersListProps> = memo(({ layers, currLayer, setLayers, s
       {layers.map((layer, i) =>
         <LayerItem
           key={layer.id}
-          isCurrent={layer.id === currLayer?.id}
+          isCurrent={layer === currLayer}
           layer={layer}
           setCurrentId={setCurrLayerId}
           toggleVisibility={e => toggleLayerVisibility(e, i)}

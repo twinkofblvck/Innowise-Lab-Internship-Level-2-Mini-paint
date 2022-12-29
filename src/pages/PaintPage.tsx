@@ -12,7 +12,7 @@ import ImportInput from "../components/paint/toolbar/ImportInput";
 import ExportDialog from "../components/paint/toolbar/ExportDialog";
 import History from "../paint/control/History";
 import ToolBar from "../components/paint/toolbar/ToolBar";
-import Layer from "../paint/control/Layer";
+import { Layer } from "../paint/control/Layer";
 import ToolBarToggleBtn from "../components/paint/ToolBarToggleBtn";
 
 const PaintPage = memo(() =>
@@ -23,7 +23,7 @@ const PaintPage = memo(() =>
   const [layers, setLayers] = useState(() =>
   {
     Layer.ResetIdentity();
-    return [new Layer(800, 600)];
+    return [Layer.Create(800, 600)];
   });
   const [currLayerId, setCurrLayerId] = useState<number>();
   const [tool, setTool] = useState<PaintTool>(Tools[0].variant);

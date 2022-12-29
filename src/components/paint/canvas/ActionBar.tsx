@@ -14,11 +14,9 @@ const ActionBar: FC<IActionBarProps> = memo(({ transform, history }) =>
   const adaptiveProps: FlexProps = useMemo(() => (
     {
       pos: "fixed",
-      top: "48px",
+      top: "228px",
       left: "10px",
       direction: "column",
-      justify: "center",
-      h: "calc(100% - 48px)"
     }
   ), []);
 

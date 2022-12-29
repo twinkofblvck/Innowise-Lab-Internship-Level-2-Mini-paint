@@ -1,8 +1,8 @@
-import Layer from "./Layer";
+import { ILayer } from "./Layer";
 
 export default class History
 {
-  private _layers: WeakMap<Layer, { stack: Snapshot[], head: number; }> = new WeakMap();
+  private _layers: WeakMap<ILayer, { stack: Snapshot[], head: number; }> = new WeakMap();
   private _size: number;
 
   public constructor(size: number)
@@ -10,7 +10,7 @@ export default class History
     this._size = size;
   }
 
-  public Push(layer: Layer, snapshot: Snapshot): void
+  public Push(layer: ILayer, snapshot: Snapshot): void
   {
     if (!this._layers.get(layer)) this._layers.set(layer, { head: -1, stack: [] });
 
@@ -23,7 +23,7 @@ export default class History
     mapLayer.head--;
   }
 
-  public Forward(layer: Layer)
+  public Forward(layer: ILayer)
   {
     const mapLayer = this._layers.get(layer);
     if (!mapLayer || mapLayer.head >= mapLayer.stack.length - 1) return;
@@ -31,7 +31,7 @@ export default class History
     mapLayer.stack[++mapLayer.head].Restore();
   }
 
-  public Backward(layer: Layer)
+  public Backward(layer: ILayer)
   {
     const mapLayer = this._layers.get(layer);
     if (!mapLayer || mapLayer.head <= 0) return;
@@ -39,7 +39,7 @@ export default class History
     mapLayer.stack[--mapLayer.head].Restore();
   }
 
-  public IsEmpty(layer: Layer): boolean
+  public IsEmpty(layer: ILayer): boolean
   {
     const mapLayer = this._layers.get(layer);
     return !mapLayer?.stack?.length;

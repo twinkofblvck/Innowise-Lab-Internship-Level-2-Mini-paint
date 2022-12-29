@@ -1,8 +1,8 @@
 import { Flex } from "@chakra-ui/react";
-import { forwardRef, memo, MouseEvent, RefObject, useCallback, useEffect, useMemo, useRef } from "react";
+import { forwardRef, memo, MouseEvent, RefObject, useCallback, useEffect, useMemo, useState } from "react";
 import PaintTool from "../../../paint/tools";
 import History from "../../../paint/control/History";
-import Layer from "../../../paint/control/Layer";
+import { ILayer } from "../../../paint/control/Layer";
 import KeyboardAccess from "../../../keyboard/KeyboardAccess";
 import useTransform from "../../../hooks/canvas/useTransform";
 import TransformButtons from "./TransformButtons";
@@ -15,13 +15,15 @@ interface IDrawCanvasProps
   tool: PaintTool | null;
   color: string;
   size: number;
-  layer: Layer | undefined;
+  layer: ILayer | undefined;
   stack: RefObject<History>;
 }
 
 const DrawCanvas = memo(forwardRef<HTMLCanvasElement, IDrawCanvasProps>(({ tool, color, size, layer, stack }, ref) =>
 {
   const [transform, actions] = useTransform();
+
+  const [keyboard, setKeyboard] = useState<KeyboardAccess>();
 
   const onMouseMove = useCallback((e: MouseEvent) =>
     e.ctrlKey ? actions.translate(e) : tool?.OnMouseMove(e), [tool, actions.translate]);
@@ -45,24 +47,26 @@ const DrawCanvas = memo(forwardRef<HTMLCanvasElement, IDrawCanvasProps>(({ tool,
   const undo = useCallback(() => layer && stack.current?.Backward(layer), [layer, stack]);
   const redo = useCallback(() => layer && stack.current?.Forward(layer), [layer, stack]);
 
-  const keyboard = useRef(new KeyboardAccess(window));
-
   useEffect(() =>
   {
-    keyboard.current.AddKeys(["z", undo], ["y", redo], ["h", actions.flipX], ["v", actions.flipY],
-      ["=", actions.zoomIn], ["-", actions.zoomOut], ["9", actions.rotateLeft], ["0", actions.rotateRight]);
+    setKeyboard(() =>
+      new KeyboardAccess(window)
+        .AddKeys(["z", undo], ["y", redo], ["h", actions.flipX], ["v", actions.flipY], ["=", actions.zoomIn],
+          ["-", actions.zoomOut], ["9", actions.rotateLeft], ["0", actions.rotateRight])
+        .Allow());
 
-    keyboard.current.Allow();
-    return () => 
+    return () =>
     {
-      keyboard.current.Block(); 
+      keyboard?.Block();
     };
   }, [undo, redo, actions]);
 
-  const historyElement = useMemo(() => <HistoryButtons redo={redo} undo={undo} />, [undo, redo]);
+  const historyElement = useMemo(() =>
+    <HistoryButtons keyboard={keyboard} redo={redo} undo={undo} />, [undo, redo, keyboard]);
+
   const transformElement = useMemo(() => (
-    <TransformButtons actions={actions} xFlipped={transform.scaleX < 0} yFlipped={transform.scaleY < 0} />
-  ), [actions, transform]);
+    <TransformButtons keyboard={keyboard} actions={actions} xFlipped={transform.scaleX < 0} yFlipped={transform.scaleY < 0} />
+  ), [actions, transform, keyboard]);
 
   return (
     <Flex direction="column" align="center" justify="center" overflow="hidden" flex={1} h="full">

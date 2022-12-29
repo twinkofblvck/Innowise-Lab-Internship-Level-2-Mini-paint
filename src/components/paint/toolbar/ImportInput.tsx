@@ -1,11 +1,11 @@
 import { FormLabel, Input } from "@chakra-ui/react";
 import { ChangeEvent, FC, memo, RefObject, useCallback } from "react";
 import History, { Snapshot } from "../../../paint/control/History";
-import Layer from "../../../paint/control/Layer";
+import { ILayer } from "../../../paint/control/Layer";
 
 interface IImportInputProps
 {
-  targetLayer: Layer | undefined;
+  targetLayer: ILayer | undefined;
   stack: RefObject<History>;
 }
 

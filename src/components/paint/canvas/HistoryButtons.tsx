@@ -1,19 +1,25 @@
-import { Button } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { IoArrowRedoOutline, IoArrowUndoOutline } from "react-icons/io5";
+import KeyboardAccess from "../../../keyboard/KeyboardAccess";
+import ActionBtn from "./ActionBtn";
 
 interface IHistoryButtonsProps
 {
+  keyboard: KeyboardAccess | undefined;
   undo: () => void;
   redo: () => void;
 }
 
-const HistoryButtons: FC<IHistoryButtonsProps> = memo(({ undo, redo }) =>
+const HistoryButtons: FC<IHistoryButtonsProps> = memo(({ undo, redo, keyboard }) =>
 {
   return (
     <>
-      <Button onClick={undo}><IoArrowUndoOutline /></Button>
-      <Button onClick={redo}><IoArrowRedoOutline /></Button>
+      <ActionBtn action={undo} hotkey={keyboard?.CharFor(undo)}>
+        <IoArrowUndoOutline />
+      </ActionBtn>
+      <ActionBtn action={redo} hotkey={keyboard?.CharFor(redo)}>
+        <IoArrowRedoOutline />
+      </ActionBtn>
     </>
   );
 });

@@ -1,7 +1,7 @@
 import { RefObject, useEffect, useRef } from "react";
-import Layer from "../../paint/control/Layer";
+import { ILayer } from "../../paint/control/Layer";
 
-export default function usePaint(mainCanvas: RefObject<HTMLCanvasElement>, layers: Layer[])
+export default function usePaint(mainCanvas: RefObject<HTMLCanvasElement>, layers: ILayer[])
 {
   const raf = useRef<number | null>(null);
 

@@ -2,7 +2,7 @@ import { Button, Flex, useDisclosure } from "@chakra-ui/react";
 import { ChangeEvent, FC, memo, useCallback, useState } from "react";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { AiOutlineEdit } from "react-icons/ai";
-import Layer from "../../../paint/control/Layer";
+import { ILayer } from "../../../paint/control/Layer";
 import FormInput from "../../generic/FormInput";
 import ModalWindow from "../../generic/ModalWindow";
 
@@ -10,7 +10,7 @@ interface ILayerActionsProps
 {
   add: () => void;
   remove: () => void;
-  move: (direction: (arr: Layer[], i: number) => Layer[]) => void;
+  move: (direction: (arr: ILayer[], i: number) => ILayer[]) => void;
   rename: (name: string) => void;
   removalBlocked: boolean;
 }
@@ -31,13 +31,13 @@ const LayerActions: FC<ILayerActionsProps> = memo(({ add, remove, move, rename, 
     setName("");
   }, [rename, name, onClose]);
 
-  const forward = useCallback((arr: Layer[], i: number) =>
+  const forward = useCallback((arr: ILayer[], i: number) =>
   {
     if (i < arr.length - 1) [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
     return arr;
   }, []);
 
-  const back = useCallback((arr: Layer[], i: number) =>
+  const back = useCallback((arr: ILayer[], i: number) =>
   {
     if (i > 0) [arr[i - 1], arr[i]] = [arr[i], arr[i - 1]];
     return arr;
