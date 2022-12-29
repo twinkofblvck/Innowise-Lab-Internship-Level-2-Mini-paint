@@ -7,14 +7,14 @@ export default abstract class PaintTool
   protected _ctx: CanvasRenderingContext2D;
 
   private _state: Snapshot | null = null;
-
+  private _pending: Promise<void> | null = null;
 
   public constructor(ctx?: CanvasRenderingContext2D)
   {
     this._ctx = ctx ?? document.createElement("canvas").getContext("2d")!;
   }
 
-  public SetCtx(ctx?: CanvasRenderingContext2D)
+  public SetCtx(ctx?: CanvasRenderingContext2D): void
   {
     if (!ctx) return;
 
@@ -33,16 +33,20 @@ export default abstract class PaintTool
     this._state = this.BackupContext();
   }
 
-  public OnMouseUp(e: MouseEvent): void
+  public async OnMouseUp(e: MouseEvent): Promise<void>
   {
     this._isActive = false;
+    await this._pending;
   }
 
   public OnMouseMove(e: MouseEvent): void
   {
     if (!this._isActive) return;
 
-    this._state?.Restore(() => this.Draw(e));
+    const pending = new Promise<void>(resolve =>
+      this._state?.Restore(() => resolve(this.Draw(e))));
+
+    this._pending = pending;
   }
 
   public BackupContext(): Snapshot

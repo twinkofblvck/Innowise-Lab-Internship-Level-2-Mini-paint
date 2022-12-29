@@ -36,10 +36,10 @@ const DrawCanvas = memo(forwardRef<HTMLCanvasElement, IDrawCanvasProps>(({ tool,
     if (stack.current?.IsEmpty(layer)) stack.current.Push(layer, tool.BackupContext());
   }, [tool, color, size, layer, stack]);
 
-  const onMouseUp = useCallback((e: MouseEvent) =>
+  const onMouseUp = useCallback(async (e: MouseEvent) =>
   {
     if (!tool || !layer) return;
-    tool?.OnMouseUp(e);
+    await tool?.OnMouseUp(e);
 
     stack.current?.Push(layer, tool.BackupContext());
   }, [tool, layer, stack]);
