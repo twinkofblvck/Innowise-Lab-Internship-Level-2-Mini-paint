@@ -1,18 +1,8 @@
 import { Button } from "@chakra-ui/react";
 import { FC, memo, useCallback } from "react";
-import { IconType } from "react-icons/lib";
-import PaintTool from "../../../paint/tools";
+import { IToolButtonProps } from "@/components/paint/toolbar";
 
-interface IToolButtonProps
-{
-  tool: PaintTool;
-  onClick: (tool: PaintTool) => void;
-  Icon: IconType;
-  isCurrent: boolean;
-}
-
-const ToolButton: FC<IToolButtonProps> = memo(({ tool, onClick, Icon, isCurrent }) =>
-{
+const ToolButton: FC<IToolButtonProps> = memo(({ tool, onClick, Icon, isCurrent }) => {
   const setTool = useCallback(() => onClick(tool), [tool, onClick]);
 
   return (

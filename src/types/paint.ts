@@ -1,5 +1,4 @@
-export enum LayerEffects
-{
+export enum LayerEffects {
   default = "source-over",
   lighter = "lighter",
   multiply = "multiply",
@@ -16,7 +15,7 @@ export enum LayerEffects
   hue = "hue",
   saturation = "saturation",
   color = "color",
-  luminosity = "luminosity"
+  luminosity = "luminosity",
 }
 
 export type t_LayerEffect = keyof typeof LayerEffects;

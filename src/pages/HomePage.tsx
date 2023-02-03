@@ -1,25 +1,21 @@
 import { Flex } from "@chakra-ui/react";
 import { ChangeEvent, memo, useCallback, useEffect, useState } from "react";
-import useTypeDispatch from "../hooks/redux/useTypeDispatch";
-import getImagesAction from "../store/slices/images/actions/get";
-import ImageList from "../components/home/ImageList";
-import { IListImage } from "../types/images";
-import ImageFilter from "../components/home/ImageFilter";
+import { useTypeDispatch } from "@/hooks/redux";
+import { getImagesAction } from "@/store/slices/images/actions";
+import { ImageList, ImageFilter } from "@/components/home";
+import { IListImage } from "@/types";
 
-const HomePage = memo(() =>
-{
+const HomePage = memo(() => {
   const [query, setQuery] = useState("");
   const [criteria, setCriteria] = useState<keyof IListImage>("name");
 
-  const d = useTypeDispatch();
+  const dispatch = useTypeDispatch();
 
-  const onQueryChange = useCallback((e: ChangeEvent<HTMLInputElement>) =>
-    setQuery(e.target.value), []);
+  const onQueryChange = useCallback((e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value), []);
 
-  useEffect(() =>
-  {
-    d(getImagesAction());
-  }, [d]);
+  useEffect(() => {
+    dispatch(getImagesAction());
+  }, [dispatch]);
 
   return (
     <Flex direction="column" gap={5}>

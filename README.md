@@ -3,19 +3,24 @@
 ### [Task](https://drive.google.com/file/d/19cb4whI_HUVPzuaPyaj5r6hGotIVnhho/view)
 
 ### How to run the app
+
 1. Development mode
-  - `npm ci`
-  - `npm start`
+
+- `npm ci`
+- `npm start`
 
 2. Production mode
-  - `npm ci`
-  - `npm run build`
-  - `npx serve -s build`
+
+- `npm ci`
+- `npm run build`
+- `npx serve -s build`
 
 ### Database snapshot
+
 ![firestore db snapshot](https://res.cloudinary.com/blvck40deg/image/upload/v1672086548/DEV/firestore_snapshot2.png)
 
 ### Tech stack
+
 - TypeScript
 - React
 - Redux Toolkit
@@ -25,6 +30,7 @@
 - use-eyedropper
 
 ### Folder structure
+
 - **/.husky** : git hooks
 - **/public** : static HTML
 - **/src** : entry point for the main logic
@@ -58,11 +64,12 @@
   - **/utils** : utility functions
 
 ### Useful hotkeys for drawing
+
 - Z – Undo
 - Y – Redo
 - H – Flip horizontally
 - V – Flip vertically
-- + – Zoom in
+- - – Zoom in
 - \- – Zoom out
 - 9 – Rotate left
 - 0 – Rotate right

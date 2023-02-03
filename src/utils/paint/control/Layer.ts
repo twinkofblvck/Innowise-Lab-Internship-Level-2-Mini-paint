@@ -1,23 +1,20 @@
-import { LayerEffects } from "../../types/paint";
+import { LayerEffects } from "@/types";
 
-export class Layer
-{
+export class Layer {
   private static _serial = 1;
   private static _memoizedSize: [number, number] | null;
 
-  public static ResetIdentity()
-  {
+  public static ResetIdentity() {
     this._serial = 1;
   }
 
   public static Create(): ILayer;
   public static Create(width: number, height: number): ILayer;
 
-  public static Create(width?: number, height?: number): ILayer
-  {
-    if(!width && !height && !this._memoizedSize) throw new Error("Dimensions required");
+  public static Create(width?: number, height?: number): ILayer {
+    if (!width && !height && !this._memoizedSize) throw new Error("Dimensions required");
 
-    if(width && height) this._memoizedSize = [width, height];
+    if (width && height) this._memoizedSize = [width, height];
 
     const ctx = document.createElement("canvas").getContext("2d")!;
     ctx.canvas.width = width ?? this._memoizedSize![0];
@@ -25,7 +22,7 @@ export class Layer
 
     return {
       id: Date.now(),
-      name: "Layer" + this._serial++,
+      name: "Layer " + this._serial++,
       effect: LayerEffects.default,
       isVisible: true,
       ctx,
@@ -33,8 +30,7 @@ export class Layer
   }
 }
 
-export interface ILayer
-{
+export interface ILayer {
   id: number;
   name: string;
   isVisible: boolean;

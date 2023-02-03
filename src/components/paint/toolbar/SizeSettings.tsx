@@ -1,6 +1,5 @@
 import { FC, memo } from "react";
-import
-{
+import {
   Flex,
   Heading,
   NumberDecrementStepper,
@@ -11,19 +10,11 @@ import
   Slider,
   SliderFilledTrack,
   SliderThumb,
-  SliderTrack
+  SliderTrack,
 } from "@chakra-ui/react";
+import { ISizeSettingsProps } from "@/components/paint/toolbar";
 
-interface ISizeSettingsProps
-{
-  min: number;
-  max: number;
-  size: number;
-  onChange: (value: number | string) => void;
-}
-
-const SizeSettings: FC<ISizeSettingsProps> = memo(({ min, max, size, onChange }) =>
-{
+const SizeSettings: FC<ISizeSettingsProps> = memo(({ min, max, size, onChange }) => {
   return (
     <>
       <Heading size="md">Brush Size</Heading>
@@ -35,7 +26,7 @@ const SizeSettings: FC<ISizeSettingsProps> = memo(({ min, max, size, onChange })
             <NumberDecrementStepper />
           </NumberInputStepper>
         </NumberInput>
-        <Slider aria-label='slider-ex-1' min={min} max={max} value={size} onChange={onChange}>
+        <Slider aria-label="slider-ex-1" min={min} max={max} value={size} onChange={onChange}>
           <SliderTrack>
             <SliderFilledTrack />
           </SliderTrack>

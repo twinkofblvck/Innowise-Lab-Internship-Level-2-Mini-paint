@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { DispatchType } from "../../types/redux";
+import { DispatchType } from "@/types";
 
 const useTypeDispatch = () => useDispatch<DispatchType>();
 

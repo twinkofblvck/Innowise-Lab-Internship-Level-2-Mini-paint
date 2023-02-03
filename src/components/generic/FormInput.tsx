@@ -1,15 +1,8 @@
-import { Box, FormLabel, Input, InputProps } from "@chakra-ui/react";
+import { Box, FormLabel, Input } from "@chakra-ui/react";
 import { FC, KeyboardEvent, memo, useCallback } from "react";
+import { IFormInputProps } from "@/components/generic";
 
-interface IFormInputProps extends InputProps
-{
-  label: string;
-  id: string;
-}
-
-const FormInput: FC<IFormInputProps> = memo(({ label, ...props }) =>
-{
-
+const FormInput: FC<IFormInputProps> = memo(({ label, ...props }) => {
   const onKeyDown = useCallback((e: KeyboardEvent) => e.stopPropagation(), []);
 
   return (

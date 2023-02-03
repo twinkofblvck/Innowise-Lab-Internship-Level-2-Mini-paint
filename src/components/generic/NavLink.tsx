@@ -1,15 +1,9 @@
 import { Link } from "@chakra-ui/react";
-import { FC, memo, ReactNode } from "react";
+import { FC, memo } from "react";
 import { Link as RouteLink, useLocation } from "react-router-dom";
+import { INavLinkProps } from "@/components/generic";
 
-interface INavLinkProps
-{
-  to: string;
-  children: ReactNode;
-}
-
-const NavLink: FC<INavLinkProps> = memo(({ children, to }) =>
-{
+const NavLink: FC<INavLinkProps> = memo(({ children, to }) => {
   const { pathname } = useLocation();
 
   return (

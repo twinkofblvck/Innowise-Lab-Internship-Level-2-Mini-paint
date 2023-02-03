@@ -1,10 +1,8 @@
 import { MouseEvent } from "react";
-import FigureTool from "./FigureTool";
+import FigureTool from "@/utils/paint/tools/FigureTool";
 
-export default class CircleTool extends FigureTool
-{
-  public override Draw(e: MouseEvent): void
-  {
+export default class CircleTool extends FigureTool {
+  public override Draw(e: MouseEvent): void {
     const dx = e.nativeEvent.offsetX - this._startX;
     const dy = e.nativeEvent.offsetY - this._startY;
     const r = Math.sqrt(dx ** 2 + dy ** 2) * 0.5;

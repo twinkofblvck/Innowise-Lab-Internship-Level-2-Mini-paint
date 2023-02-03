@@ -1,19 +1,8 @@
 import { Flex } from "@chakra-ui/react";
-import { FC, memo, ReactElement } from "react";
+import { FC, memo } from "react";
+import { IToolBarProps } from "@/components/paint/toolbar";
 
-interface IToolBarProps
-{
-  isHidden: boolean;
-  import_: ReactElement;
-  export_: ReactElement;
-  color: ReactElement;
-  size: ReactElement;
-  tools: ReactElement;
-  layers: ReactElement;
-}
-
-const ToolBar: FC<IToolBarProps> = memo(({ isHidden, import_, export_, color, layers, size, tools }) =>
-{
+const ToolBar: FC<IToolBarProps> = memo(({ isHidden, import_, export_, color, layers, size, tools }) => {
   return (
     <Flex
       pos="relative"
@@ -25,7 +14,7 @@ const ToolBar: FC<IToolBarProps> = memo(({ isHidden, import_, export_, color, la
       h="full"
       overflowY="auto"
       zIndex={1}
-      {...(isHidden && {display: "none"})}
+      {...(isHidden && { display: "none" })}
     >
       {import_}
       {export_}

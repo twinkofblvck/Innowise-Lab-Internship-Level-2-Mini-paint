@@ -1,18 +1,9 @@
 import { Button, Flex } from "@chakra-ui/react";
-import { Dispatch, FC, MouseEvent, SetStateAction, useCallback } from "react";
+import { FC, useCallback } from "react";
 import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
-import { ILayer } from "../../../paint/control/Layer";
+import { ILayerItemProps } from "@/components/paint/toolbar";
 
-interface ILayerItemProps
-{
-  layer: ILayer;
-  isCurrent: boolean;
-  setCurrentId: Dispatch<SetStateAction<number | undefined>>;
-  toggleVisibility: (e: MouseEvent) => void;
-}
-
-const LayerItem: FC<ILayerItemProps> = ({ layer, isCurrent, setCurrentId, toggleVisibility }) =>
-{
+const LayerItem: FC<ILayerItemProps> = ({ layer, isCurrent, setCurrentId, toggleVisibility }) => {
   const setCurrent = useCallback(() => setCurrentId(layer.id), [layer, setCurrentId]);
 
   return (

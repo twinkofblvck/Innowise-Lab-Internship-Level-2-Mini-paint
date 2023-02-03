@@ -1,38 +1,29 @@
 import { createSlice, isAnyOf, isFulfilled, isPending, isRejected } from "@reduxjs/toolkit";
+import { IGenericState } from "@/store/slices/generic/GenericSlice.type";
+import { Slices } from "@/types";
 
-export interface IGenericState
-{
-  isLoading: boolean;
-  error: string | null;
-}
-
-const initialState: IGenericState =
-{
+const initialState: IGenericState = {
   isLoading: false,
-  error: null
+  error: null,
 };
 
 const genericSlice = createSlice({
-  name: "generic",
+  name: Slices.Generic,
   initialState,
   reducers: {},
-  extraReducers: builder =>
-  {
+  extraReducers: (builder) => {
     builder
-      .addMatcher(isPending, state =>
-      {
+      .addMatcher(isPending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addMatcher(isAnyOf(isFulfilled, isRejected), state =>
-      {
+      .addMatcher(isAnyOf(isFulfilled, isRejected), (state) => {
         state.isLoading = false;
       })
-      .addMatcher(isRejected, (state, action) =>
-      {
+      .addMatcher(isRejected, (state, action) => {
         state.error = action.payload as string;
       });
-  }
+  },
 });
 
 export default genericSlice;

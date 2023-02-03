@@ -1,22 +1,18 @@
 import { RefObject, useEffect, useRef } from "react";
-import { ILayer } from "../../paint/control/Layer";
+import { ILayer } from "@/utils/paint/control";
 
-export default function usePaint(mainCanvas: RefObject<HTMLCanvasElement>, layers: ILayer[])
-{
+export default function usePaint(mainCanvas: RefObject<HTMLCanvasElement>, layers: ILayer[]) {
   const raf = useRef<number | null>(null);
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     if (raf.current) cancelAnimationFrame(raf.current);
 
     const ctx = mainCanvas.current?.getContext("2d")!;
 
-    const loop = () =>
-    {
+    const loop = () => {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-      for(let i = 0; i < layers.length; i++)
-      {
+      for (let i = 0; i < layers.length; i++) {
         ctx.globalCompositeOperation = layers[i].effect;
         ctx.drawImage(layers[i].ctx.canvas, 0, 0);
       }
@@ -26,8 +22,7 @@ export default function usePaint(mainCanvas: RefObject<HTMLCanvasElement>, layer
 
     loop();
 
-    return function ()
-    {
+    return function () {
       raf.current && cancelAnimationFrame(raf.current);
     };
   }, [layers, mainCanvas]);

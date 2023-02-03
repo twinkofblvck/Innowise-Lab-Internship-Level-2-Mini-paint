@@ -1,4 +1,4 @@
-import { RootState } from "../../types/redux";
+import { RootState } from "@/types";
 
 const genericSelector = (state: RootState) => state.generic;
 

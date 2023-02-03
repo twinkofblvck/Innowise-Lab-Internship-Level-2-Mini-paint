@@ -1,34 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IListImage } from "../../../types/images";
-import getImagesAction from "./actions/get";
-import removeImageAction from "./actions/remove";
+import { getImagesAction, removeImageAction } from "@/store/slices/images/actions";
+import { IImagesState } from "@/store/slices/images/ImagesSlice.type";
+import { Slices } from "@/types";
 
-interface IImagesState
-{
-  images: IListImage[];
-}
-
-const initialState: IImagesState =
-{
+const initialState: IImagesState = {
   images: [],
 };
 
 const imagesSlice = createSlice({
-  name: "images",
+  name: Slices.Images,
   initialState,
   reducers: {},
-  extraReducers: builder =>
-  {
+  extraReducers: (builder) => {
     builder
-      .addCase(getImagesAction.fulfilled, (state, action) =>
-      {
+      .addCase(getImagesAction.fulfilled, (state, action) => {
         state.images = action.payload;
       })
-      .addCase(removeImageAction.fulfilled, (state, action) =>
-      {
-        state.images = state.images.filter(image => image.id !== action.payload);
+      .addCase(removeImageAction.fulfilled, (state, action) => {
+        state.images = state.images.filter((image) => image.id !== action.payload);
       });
-  }
+  },
 });
 
 export default imagesSlice;

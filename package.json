@@ -28,11 +28,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
     "lint": "eslint .",
+    "format": "prettier --write .",
     "prepare": "husky install"
   },
   "browserslist": {
@@ -48,6 +49,8 @@
     ]
   },
   "devDependencies": {
-    "husky": "^8.0.2"
+    "@craco/craco": "^7.0.0",
+    "husky": "^8.0.2",
+    "prettier": "2.8.3"
   }
 }

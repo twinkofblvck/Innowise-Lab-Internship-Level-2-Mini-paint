@@ -1,10 +1,8 @@
 import { MouseEvent } from "react";
-import FigureTool from "./FigureTool";
+import FigureTool from "@/utils/paint/tools/FigureTool";
 
-export default class LineTool extends FigureTool
-{
-  public override Draw(e: MouseEvent): void
-  {
+export default class LineTool extends FigureTool {
+  public override Draw(e: MouseEvent): void {
     this._ctx.beginPath();
 
     this._ctx.moveTo(this._startX, this._startY);

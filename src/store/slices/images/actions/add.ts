@@ -1,16 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import server from "../../../../server";
-import { IImage } from "../../../../types/images";
+import { server } from "@/server";
+import { IImage, ImageActions } from "@/types";
+import { getErrorMessage } from "@/utils/exceptions";
 
-const addImageAction = createAsyncThunk("images/add", async (image: IImage, thunkAPI) =>
-{
-  try
-  {
+const addImageAction = createAsyncThunk(ImageActions.Add, async (image: IImage, thunkAPI) => {
+  try {
     await server.images.AddImage(image);
-  }
-  catch(e: any)
-  {
-    return thunkAPI.rejectWithValue(e.message);
+  } catch (e) {
+    return thunkAPI.rejectWithValue(getErrorMessage(e));
   }
 });
 

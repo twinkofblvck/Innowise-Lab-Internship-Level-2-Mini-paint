@@ -1,16 +1,10 @@
 import { Button } from "@chakra-ui/react";
-import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
+import { FC, memo, useCallback } from "react";
 import { TbSettings, TbSettingsOff } from "react-icons/tb";
+import { IToolBarToggleBtnProps } from "@/components/paint";
 
-interface IToolBarToggleBtnProps
-{
-  setIsToolBarHidden: Dispatch<SetStateAction<boolean>>;
-  isToolBarHidden: boolean;
-}
-
-const ToolBarToggleBtn: FC<IToolBarToggleBtnProps> = memo(({ isToolBarHidden, setIsToolBarHidden }) =>
-{
-  const toggle = useCallback(() => setIsToolBarHidden(prev => !prev), [setIsToolBarHidden]);
+const ToolBarToggleBtn: FC<IToolBarToggleBtnProps> = memo(({ isToolBarHidden, setIsToolBarHidden }) => {
+  const toggle = useCallback(() => setIsToolBarHidden((prev) => !prev), [setIsToolBarHidden]);
 
   return (
     <Button

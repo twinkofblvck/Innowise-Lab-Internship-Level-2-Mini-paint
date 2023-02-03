@@ -1,18 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import server from "../../../../server";
-import { IAuthParams } from "../../../../types/auth";
-import validate from "../../../../utils/auth/validate";
+import { server } from "@/server";
+import { AuthActions, IAuthParams } from "@/types";
+import { authValidate } from "@/utils/auth";
+import { getErrorMessage } from "@/utils/exceptions";
 
-const signupAction = createAsyncThunk("auth/signup", async (params: IAuthParams, thunkAPI) =>
-{
-  try
-  {
-    validate(params);
+const signupAction = createAsyncThunk(AuthActions.SignUp, async (params: IAuthParams, thunkAPI) => {
+  try {
+    authValidate(params);
     await server.auth.SignUp(params.email, params.password);
-  }
-  catch(e: any)
-  {
-    return thunkAPI.rejectWithValue(e.message);
+  } catch (e) {
+    return thunkAPI.rejectWithValue(getErrorMessage(e));
   }
 });
 
